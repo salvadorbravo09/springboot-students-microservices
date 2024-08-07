@@ -20,7 +20,7 @@ public class StudentController {
     }
 
     @GetMapping("/search/{id}")
-    public ResponseEntity<?> findById(@PathVariable Long id) {
+    public ResponseEntity<?> findStudentById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(studentService.findById(id));
     }
 
@@ -28,6 +28,12 @@ public class StudentController {
     @ResponseStatus(HttpStatus.CREATED)
     public void saveStudent(@RequestBody Student student) {
         studentService.save(student);
+    }
+
+    // Endpoint para consumir el microservicio de course
+    @GetMapping("/search-by-course/{idCourse}")
+    public ResponseEntity<?> findByIdCourse(@PathVariable Long idCourse) {
+        return ResponseEntity.status(HttpStatus.OK).body(studentService.findByIdCourse(idCourse));
     }
 
 

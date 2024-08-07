@@ -29,4 +29,9 @@ public class CourseController {
     public void saveCourse(@RequestBody Course course) {
         courseService.save(course);
     }
+
+    @GetMapping("/search-student/{idCourse}")
+    public ResponseEntity<?> findStudentsByIdCourse(@PathVariable Long idCourse) {
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.findStudentsByIdCourse(idCourse));
+    }
 }

@@ -11,7 +11,7 @@ spring:
     password: alejandrobravo09
   jpa:
     hibernate:
-      ddl-auto: create # Cuando le levante la app, se genera las tablas de la db automáticamente.
+      ddl-auto: create # Cuando le levante la app, se genera las tablas de la db automaticamente.
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
   config:

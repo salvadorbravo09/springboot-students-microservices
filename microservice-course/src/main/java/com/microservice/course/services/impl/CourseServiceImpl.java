@@ -1,6 +1,9 @@
 package com.microservice.course.services.impl;
 
+import com.microservice.course.client.StudentClient;
+import com.microservice.course.dtos.StudentDTO;
 import com.microservice.course.entities.Course;
+import com.microservice.course.http.response.StudentByCourseResponse;
 import com.microservice.course.persistence.CourseRepository;
 import com.microservice.course.services.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,9 @@ public class CourseServiceImpl implements ICourseService {
 
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private StudentClient studentClient;
 
     @Override
     public List<Course> findAll() {
@@ -27,5 +33,21 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     public void save(Course course) {
         courseRepository.save(course);
+    }
+
+    @Override
+    public StudentByCourseResponse findStudentsByIdCourse(Long idCourse) {
+
+        // Consultar el curso
+        Course course = courseRepository.findById(idCourse).orElse(new Course());
+
+        // Obtener los estudiantes
+        List<StudentDTO> studentDTOList = studentClient.findAllStudentByCourse(idCourse);
+
+        return StudentByCourseResponse.builder()
+                .courseName(course.getName())
+                .teacher(course.getTeacher())
+                .studentDTOList(studentDTOList)
+                .build();
     }
 }
